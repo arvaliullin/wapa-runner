@@ -5,7 +5,8 @@
   "main": "cmd/helloworld/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "helloworld": "bun examples/helloworld/main.js"
+    "helloworld": "bun examples/helloworld/main.js",
+    "sub": "bun examples/sub/main.js"
   },
   "repository": {
     "type": "git",
@@ -17,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/arvaliullin/wapa-runner/issues"
   },
-  "homepage": "https://github.com/arvaliullin/wapa-runner#readme"
+  "homepage": "https://github.com/arvaliullin/wapa-runner#readme",
+  "dependencies": {
+    "nats": "^2.29.3"
+  }
 }
