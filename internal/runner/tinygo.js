@@ -1,6 +1,6 @@
 import { Runner } from "./base.js";
-
-import { Go } from "../../misc/tinygo/wasm_exec.js"
+import { promises as fs } from "fs";
+require("../../misc/tinygo/wasm_exec.js");
 
 export class TinygoRunner extends Runner {
     /**
@@ -18,7 +18,7 @@ export class TinygoRunner extends Runner {
         const source = await fs.readFile(this.wasmPath);
         const typedArray = new Uint8Array(source);
 
-        const go = new Go();
+        const go = new globalThis.Go();
         const result = await WebAssembly.instantiate(typedArray, go.importObject);
 
         go.run(result.instance);
