@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  runner:
+    build:
+      context: .
+      dockerfile: build/runner.Dockerfile
+    environment:
+      NATS_SERVER: "nats://192.168.27.216:4222"
+      NATS_TOPIC: "default_runner"
+      NATS_TIMEOUT: "5000"
+    command: [ "bun", "/app/cmd/runner/main.js" ]
