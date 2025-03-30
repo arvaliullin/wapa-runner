@@ -4,7 +4,8 @@
   "description": "",
   "main": "cmd/runner/main.js",
   "scripts": {
-    "start": "bun cmd/runner/main.js"
+    "start": "bun cmd/runner/main.js",
+    "build": "esbuild cmd/runner/main.js --bundle --outfile=out/runner/bundle.js --platform=node --target=node18"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,8 @@
   "homepage": "https://github.com/arvaliullin/wapa-runner#readme",
   "dependencies": {
     "nats": "^2.29.3"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.2"
   }
 }
