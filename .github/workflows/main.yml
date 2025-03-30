@@ -1,4 +1,4 @@
-name: Build and Run WebAssembly
+name: Build and Deploy Runner
 
 on:
   push:
@@ -22,5 +22,26 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Build and Run Tests
-        run: make bench
+      - name: Build
+        run: make pkg
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PRIVATE_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "${{ secrets.KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+
+      - name: Deploy
+        run: |
+          rsync -avz --delete out/runner ${{ secrets.REMOTE_DEST }}
+
+      - name: Execute Commands on Remote Server
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} << 'EOF'
+            mkdir -p ~/.config/systemd/user
+            cp ~/runner/runner.service ~/.config/systemd/user/
+            systemctl --user daemon-reload
+            systemctl --user restart runner.service
+            systemctl --user status runner.service
+          EOF

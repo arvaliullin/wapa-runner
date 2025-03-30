@@ -7,6 +7,8 @@ async function main() {
         timeout: parseInt(process.env.NATS_TIMEOUT, 10) || 3000
     };
 
+    console.log("Средство запуска экспериментов запущено с конфигурацией:", config);
+
     try {
         const subscriber = new Subscriber(config);
         await subscriber.start();

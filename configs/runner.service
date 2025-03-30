@@ -1,0 +1,14 @@
+[Unit]
+Description=Runner Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/bun /home/vhagar/runner/bundle.js
+WorkingDirectory=/home/vhagar/runner
+Environment="NATS_SERVER=nats://localhost:4222"
+Environment="NATS_TOPIC=default_runner"
+Environment="NATS_TIMEOUT=3000"
+
+[Install]
+WantedBy=default.target

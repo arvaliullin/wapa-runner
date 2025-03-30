@@ -1,4 +1,3 @@
-
 all: go rs cpp
 
 go:
@@ -8,4 +7,11 @@ rs:
 cpp:
 	bun cmd/bench/main.js out/cpp/lib_cpp.out.wasm out/cpp/wapa.json
 
-.PHONY: all go tinygo rs cpp
+pkg:
+	bun install
+	bun run build
+	cp configs/runner.service out/runner
+
+clean:
+	rm -r out
+.PHONY: all go tinygo rs cpp bundle
